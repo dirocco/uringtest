@@ -21,17 +21,15 @@ bool UnixSocket::connect(bool)
     struct sockaddr_un addr;
     memset(&addr, 0, sizeof(addr));
     addr.sun_family = AF_UNIX;
-    socklen_t namelen = offsetof(struct sockaddr_un, sun_path) + path.length();
     if(abstractLinuxSocket)
     {
         addr.sun_path[0] = '\0';
-        namelen++;
         strncpy(addr.sun_path + 1, path.c_str(), std::min(sizeof(addr.sun_path)-1, path.size()));
     }
     else
         strncpy(addr.sun_path, path.c_str(), std::min(sizeof(addr.sun_path), path.size()));
 
-    int err = ::connect(fd, (struct sockaddr*)&addr, namelen);
+    int err = ::connect(fd, (struct sockaddr*)&addr, sizeof(addr));
     fatal_assert(err >= 0, "UnixSocket failed to connect: %d %s\n",
             errno, strerror(errno)); // warn instead of fatal?
 
@@ -66,17 +64,15 @@ UnixServerSocket::UnixServerSocket(const std::string& path, bool abstractLinuxSo
     memset(&addr, 0, sizeof(addr));
     addr.sun_family = AF_UNIX;
 
-    socklen_t namelen = offsetof(struct sockaddr_un, sun_path) + path.length();
     if(abstractLinuxSocket)
     {
         addr.sun_path[0] = '\0';
-        namelen++;
         strncpy(addr.sun_path + 1, path.c_str(), std::min(sizeof(addr.sun_path)-1, path.size()));
     }
     else
         strncpy(addr.sun_path, path.c_str(), std::min(sizeof(addr.sun_path), path.size()));
 
-    int err = bind(fd, (struct sockaddr*)&addr, namelen); // sizeof(addr));
+    int err = bind(fd, (struct sockaddr*)&addr, sizeof(addr));
     fatal_assert(err >= 0, "UnixServerSocket failed to bind: %d %s\n",
             errno, strerror(errno));
 #if 1
