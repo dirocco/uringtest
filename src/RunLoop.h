@@ -152,7 +152,7 @@ public:
     void addEpollEventHandler(CallbackInterface* cbi)
     {
         struct epoll_event ev = {};
-        ev.events = EPOLLIN | EPOLLHUP | EPOLLPRI | EPOLLET | EPOLLWAKEUP;
+        ev.events = EPOLLIN | EPOLLHUP | EPOLLPRI | EPOLLWAKEUP;
         ev.data.ptr = cbi;
         int res = epoll_ctl(epollfd, EPOLL_CTL_ADD, cbi->getFileDescriptor(), &ev);
         fatal_assert(res == 0, "Could not add epoll handler: %d %s\n", errno, strerror(errno));

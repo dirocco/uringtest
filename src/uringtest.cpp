@@ -64,7 +64,7 @@ void SocketPerformanceTest(bool useEpoll)
     while(r.recvcount != 0)
         asm("pause");
 
-    info("Sending %d timestamps\n", sendcount);
+    //info("Sending %d timestamps\n", sendcount);
 
     for(int i = 0; i < sendcount; i++)
     {
@@ -129,8 +129,11 @@ void LocklessQueueTest()
 int main(int argc, char** argv)
 {
     LocklessQueueTest();
+    printf("---\n");
     SocketPerformanceTest(true);
+    printf("---\n");
     SocketPerformanceTest(false);
+    printf("---\n");
 
     return 0;
 }

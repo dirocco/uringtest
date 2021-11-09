@@ -13,7 +13,7 @@ UnixSocket::UnixSocket(const std::string& path, bool abstractLinuxSocket)
     fd = socket(AF_UNIX, SOCK_STREAM, 0);
     fatal_assert(fd >= 0, "Failed to create UnixSocket at path: %s %d %s\n", path.c_str(), errno, strerror(errno));
 
-    info("UnixSocket %s connected on fd %d\n", path.c_str(), fd);
+    //info("UnixSocket %s connected on fd %d\n", path.c_str(), fd);
 }
 
 bool UnixSocket::connect(bool)
@@ -52,7 +52,7 @@ UnixSocket::UnixSocket(int fd, const std::string& path)
 : path(path), fd(fd)
 {
     fd = fd;
-    info("UnixSocket client %s connected on fd %d\n", path.c_str(), fd);
+    //info("UnixSocket client %s connected on fd %d\n", path.c_str(), fd);
 }
 
 
