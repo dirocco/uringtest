@@ -1,5 +1,5 @@
 # uringtest
-A test comparing io_uring, epoll, and boost::lockfrere::spsc_queue latency when using a pair of Unix stream sockets.
+A test comparing io_uring, epoll, and boost::lockfree::spsc_queue latency when using a pair of Unix stream sockets.
 
 ### To build:
 ```
